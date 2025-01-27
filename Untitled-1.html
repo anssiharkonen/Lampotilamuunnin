@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lämpötilamuunnin</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .converter {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+    input, button {
+      font-size: 16px;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 90%;
+    }
+    button {
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .result, .error {
+      margin-top: 15px;
+      font-size: 16px;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="converter">
+    <h1>Lämpötilamuunnin</h1>
+    <input type="text" id="temperature" placeholder="Syötä lämpötila" />
+    <button onclick="convertToFahrenheit()">Muunna Fahrenheitiksi</button>
+    <button onclick="convertToCelsius()">Muunna Celsius-asteiksi</button>
+    <div class="result" id="result"></div>
+    <div class="error" id="error"></div>
+  </div>
+
+  <script>
+    function convertToFahrenheit() {
+      clearMessages();
+      const tempInput = document.getElementById('temperature').value;
+      const temperature = parseFloat(tempInput);
+
+      if (isNaN(temperature)) {
+        displayError('Anna kelvollinen numero lämpötilaksi.');
+        return;
+      }
+
+      if (temperature < -273.15) {
+        displayError('Lämpötila ei voi olla pienempi kuin absoluuttinen nollapiste (-273,15°C).');
+        return;
+      }
+
+      const fahrenheit = (temperature * 9/5) + 32;
+      displayResult(`${temperature}°C on ${fahrenheit.toFixed(2)}°F`);
+    }
+
+    function convertToCelsius() {
+      clearMessages();
+      const tempInput = document.getElementById('temperature').value;
+      const temperature = parseFloat(tempInput);
+
+      if (isNaN(temperature)) {
+        displayError('Anna kelvollinen numero lämpötilaksi.');
+        return;
+      }
+
+      if (temperature < -459.67) {
+        displayError('Lämpötila ei voi olla pienempi kuin absoluuttinen nollapiste (-459,67°F).');
+        return;
+      }
+
+      const celsius = (temperature - 32) * 5/9;
+      displayResult(`${temperature}°F on ${celsius.toFixed(2)}°C`);
+    }
+
+    function displayResult(message) {
+      document.getElementById('result').innerText = message;
+    }
+
+    function displayError(message) {
+      document.getElementById('error').innerText = message;
+    }
+
+    function clearMessages() {
+      document.getElementById('result').innerText = '';
+      document.getElementById('error').innerText = '';
+    }
+  </script>
+</body>
+</html>
